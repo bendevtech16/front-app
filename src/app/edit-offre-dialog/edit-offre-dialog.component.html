@@ -1,0 +1,103 @@
+<div mat-dialog-content class="space-y-4">
+  <!-- Mode édition avec formulaire -->
+  <form class="space-y-6 p-5 bg-white rounded-lg shadow-lg" [formGroup]="offreForm">
+    <!-- Titre de l'emploi -->
+    <div>
+      <label class="block text-gray-700 font-semibold">Titre de l'offre</label>
+      <input type="text" formControlName="titrePoste" placeholder="Développeur Angular"
+             class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    </div>
+  
+    <!-- Description de l'emploi -->
+    <div>
+      <label class="block text-gray-700 font-semibold">Description</label>
+      <textarea formControlName="description" 
+                class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+    </div>
+  
+    <!-- Compétences requises -->
+    <div>
+      <label class="block text-gray-700 font-semibold">Compétences</label>
+      <input type="text" formControlName="competences" placeholder="Angular, SpringBoot, Microservices"
+             class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    </div>
+  
+    <!-- Lieu de travail -->
+    <div>
+      <label class="block text-gray-700 font-semibold">Lieu de travail</label>
+      <input type="text" formControlName="lieu" placeholder="Ex: Yaoundé, Cameroun"
+             class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    </div>
+  
+    <!-- Type de contrat -->
+    <div>
+      <label class="block text-gray-700 font-semibold">Type de contrat</label>
+      <select formControlName="typeContrat"
+              class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <option value="" disabled>Choisir un</option>
+        <option *ngFor="let type of typeContratEnum | keyvalue" [value]="type.value">{{ type.value }}</option>
+      </select>
+    </div>
+  
+    <!-- Salaire -->
+    <div>
+      <label class="block text-gray-700 font-semibold">Salaire</label>
+      <div class="relative mt-1">
+        <span class="absolute left-3 top-2 text-gray-500">$</span>
+        <input type="number" formControlName="salaire" placeholder="0"
+               class="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <span class="absolute right-3 top-2 text-gray-500">.00</span>
+      </div>
+    </div>
+  
+    <!-- Date de début -->
+    <div>
+      <label class="block text-gray-700 font-semibold">Date de début</label>
+      <input type="date" formControlName="dateDebut"
+             class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    </div>
+  
+    <!-- Secteur d'activité -->
+    <div>
+      <label class="block text-gray-700 font-semibold">Secteur d'activité</label>
+      <input type="text" formControlName="secteurActivite" placeholder="Ex: Technologie"
+             class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    </div>
+  
+    <!-- Niveau d'expérience -->
+    <div>
+      <label class="block text-gray-700 font-semibold">Niveau d'expérience</label>
+      <select formControlName="niveau"
+              class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <option value="" disabled>Choisir un</option>
+        <option *ngFor="let niveau of niveauExperienceEnum | keyvalue" [value]="niveau.value">{{ niveau.value }}</option>
+      </select>
+    </div>
+  
+    <!-- Niveau d'étude requis -->
+    <div>
+      <label class="block text-gray-700 font-semibold">Niveau d'étude requis</label>
+      <input type="text" formControlName="niveauEtude" placeholder="Ex: Bac+3"
+             class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    </div>
+  
+    <!-- Années d'expérience -->
+    <div>
+      <label class="block text-gray-700 font-semibold">Nombre d'années d'expérience</label>
+      <input type="number" formControlName="anneesExperience" min="1"
+             class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    </div>
+  
+    <!-- Champ de téléchargement de l'image -->
+    <div>
+      <label class="block text-gray-700 font-semibold">Image illustrative</label>
+      <input type="file" formControlName="illustration" accept=".jpg,.jpeg,.png" (change)="onFileChange($event)"
+             class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 px-3 py-2 border border-gray-300 rounded-lg">
+    </div>
+  </form>
+  
+</div>
+<div mat-dialog-actions class="flex justify-end space-x-4 mt-4">
+  <button mat-button (click)="dialogRef.close()" class="text-red-600 hover:text-red-800 font-semibold">Annuler</button>
+  <button mat-button color="primary" (click)="onSave()" class="bg-indigo-600 text-white px-4 py-2 rounded-md">Enregistrer</button>
+</div>

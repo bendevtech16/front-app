@@ -1,0 +1,129 @@
+<div class="h-[95vh] w-1/2 overflow-y-auto border border-gray-300 rounded-lg p-4 mx-auto bg-opacity-0 bg-transparent">
+  <form [formGroup]="candidatForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- Nom du candidat -->
+    <mat-form-field class="w-full">
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="nomCandidat" />
+      <mat-error *ngIf="candidatForm.get('nomCandidat')?.hasError('required')">
+        Le nom est obligatoire.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Prénom du candidat -->
+    <mat-form-field class="w-full">
+      <mat-label>Prénom</mat-label>
+      <input matInput formControlName="prenomCandidat" />
+      <mat-error *ngIf="candidatForm.get('prenomCandidat')?.hasError('required')">
+        Le prénom est obligatoire.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Téléphone du candidat -->
+    <mat-form-field class="w-full">
+      <mat-label>Téléphone</mat-label>
+      <input matInput formControlName="telephoneCandidat" type="tel" />
+      <mat-error *ngIf="candidatForm.get('telephoneCandidat')?.hasError('required')">
+        Le téléphone est obligatoire.
+      </mat-error>
+      <mat-error *ngIf="candidatForm.get('telephoneCandidat')?.hasError('pattern')">
+        Entrez un numéro de téléphone valide (9 chiffres).
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Email du candidat -->
+    <mat-form-field class="w-full">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" />
+      <mat-error *ngIf="candidatForm.get('email')?.hasError('required')">
+        L'email est obligatoire.
+      </mat-error>
+      <mat-error *ngIf="candidatForm.get('email')?.hasError('email')">
+        Entrez une adresse email valide.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Mot de passe -->
+    <mat-form-field class="w-full">
+      <mat-label>Mot de passe</mat-label>
+      <input matInput formControlName="motDePasse" type="password" />
+      <mat-error *ngIf="candidatForm.get('motDePasse')?.hasError('required')">
+        Le mot de passe est obligatoire.
+      </mat-error>
+      <mat-error *ngIf="candidatForm.get('motDePasse')?.hasError('minlength')">
+        Le mot de passe doit contenir au moins 8 caractères.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Compétences Techniques -->
+    <mat-form-field class="w-full">
+      <mat-label>Compétences Techniques (séparées par des virgules)</mat-label>
+      <input matInput formControlName="competencesTechnique" placeholder="Ex: Angular, Spring Boot, Java" />
+      <mat-error *ngIf="candidatForm.get('competencesTechnique')?.hasError('required')">
+        Les compétences techniques sont obligatoires.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Diplôme -->
+    <mat-form-field class="w-full">
+      <mat-label>Diplôme</mat-label>
+      <input matInput formControlName="diplome" />
+      <mat-error *ngIf="candidatForm.get('diplome')?.hasError('required')">
+        Le diplôme est obligatoire.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Date de naissance -->
+    <mat-form-field class="w-full">
+      <mat-label>Date de naissance</mat-label>
+      <input matInput formControlName="dateNaissance" type="date" />
+      <mat-error *ngIf="candidatForm.get('dateNaissance')?.hasError('required')">
+        La date de naissance est obligatoire.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Compétences Personnelles -->
+    <mat-form-field class="w-full">
+      <mat-label>Compétences Personnelles (séparées par des virgules)</mat-label>
+      <input matInput formControlName="competencesPersonnelles" placeholder="Ex: Communication, Adaptabilité" />
+      <mat-error *ngIf="candidatForm.get('competencesPersonnelles')?.hasError('required')">
+        Les compétences personnelles sont obligatoires.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Upload de CV -->
+    <div class="w-full">
+      <label class="block text-gray-700 text-sm font-medium mb-2" for="cvCandidat">Téléchargez votre CV (PDF uniquement)</label>
+      <input
+        id="cvCandidat"
+        type="file"
+        accept=".pdf"
+        class="block w-full text-sm text-slate-500 form-input file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-indigo-700 hover:file:bg-pink-100 px-3 py-2 border border-gray-300 rounded"
+        (change)="onFileSelected($event)"
+      />
+      <p *ngIf="selectedFile" class="text-gray-500 text-sm mt-1">
+        Fichier sélectionné : {{ selectedFile.name }}
+      </p>
+      <p *ngIf="errorMessage" class="text-red-500 text-sm mt-1">
+        {{ errorMessage }}
+      </p>
+      <mat-error *ngIf="candidatForm.get('cvCandidat')?.hasError('required')">
+        Le CV est obligatoire.
+      </mat-error>
+    </div>
+
+    <!-- Indicateur de chargement -->
+    <div *ngIf="isLoading" class="text-center">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <!-- Boutons -->
+    <div class="flex justify-between">
+      <button mat-raised-button color="primary" type="submit" [disabled]="candidatForm.invalid || isLoading">
+        Enregistrer
+      </button>
+      <button mat-raised-button color="warn" type="button" (click)="cancelForm()">
+        Annuler
+      </button>
+    </div>
+  </form>
+</div>

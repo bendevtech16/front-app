@@ -1,0 +1,85 @@
+/* admin.component.css */
+
+/* Overlay de fond */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenu de l'overlay avec défilement */
+.overlay-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh; /* Limite la hauteur */
+  overflow-y: auto; /* Active le défilement vertical */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style des boutons et autres éléments inchangé */
+.open-overlay-btn {
+  padding: 10px 20px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.submit-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.file-upload-field {
+  width: 100%;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 5px;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+.blue-drawer {
+  background-color: rgb(226 232 240); /* Bleu matérial */
+  color: white; /* Pour rendre le texte lisible sur fond bleu */
+}

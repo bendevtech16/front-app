@@ -1,0 +1,32 @@
+<h2 mat-dialog-title class="text-lg font-semibold mb-4">Détails de l'Offre</h2>
+
+<div  class="flex items-center justify-between bg-gray-50 rounded-lg p-4 space-x-6 w-full">
+  <!-- Image de l'offre -->
+  <div class="w-1/3 max-w-[300px] overflow-hidden rounded-lg shadow-md">
+    <img *ngIf="data.illustration" [src]="data.illustration" alt="Image de l'offre" class="w-full h-full object-cover" />
+  </div>
+
+ <!-- Détails de l'offre -->
+<div class="w-2/3 space-y-2">
+  <p><mat-icon class="text-indigo-700 mr-2">work</mat-icon><strong class="text-indigo-700">Poste :</strong> <span class="text-gray-800 uppercase">{{ data.titrePoste }}</span></p>
+  <p><mat-icon class="text-indigo-700 mr-2">place</mat-icon><strong class="text-indigo-700">Lieu :</strong> <span class="text-gray-800 capitalize">{{ data.lieu }}</span></p>
+  <p><mat-icon class="text-indigo-700 mr-2">description</mat-icon><strong class="text-indigo-700">Description :</strong> <span class="text-gray-800 capitalize">{{ data.description }}</span></p>
+  <p><mat-icon class="text-indigo-700 mr-2">attach_money</mat-icon><strong class="text-indigo-700">Salaire :</strong> <span class="text-gray-800 capitalize">{{ data.salaire | currency:'USD':'symbol':'1.0-0' }}</span></p>
+  
+  <!-- Compétences sur la même ligne séparées par un "-" -->
+  <p><mat-icon class="text-indigo-700 mr-2">build</mat-icon><strong class="text-indigo-700">Compétences :</strong> 
+    <span class="text-gray-800 capitalize">{{ data.competences.join(' - ') }}</span>
+  </p>
+
+  <p><mat-icon class="text-indigo-700 mr-2">business_center</mat-icon><strong class="text-indigo-700">Type de Contrat :</strong> <span class="text-gray-800 capitalize">{{ data.typeContrat }}</span></p>
+  <p><mat-icon class="text-indigo-700 mr-2">domain</mat-icon><strong class="text-indigo-700">Secteur d'activité :</strong> <span class="text-gray-800 capitalize">{{ data.secteurActivite }}</span></p>
+  <p><mat-icon class="text-indigo-700 mr-2">star</mat-icon><strong class="text-indigo-700">Niveau d'expérience :</strong> <span class="text-gray-800 capitalize">{{ data.niveau }}</span></p>
+  <p><mat-icon class="text-indigo-700 mr-2">school</mat-icon><strong class="text-indigo-700">Niveau d'étude requis :</strong> <span class="text-gray-800 capitalize">{{ data.niveauEtude }}</span></p>
+  <p><mat-icon class="text-indigo-700 mr-2">timelapse</mat-icon><strong class="text-indigo-700">Années d'expérience :</strong> <span class="text-gray-800 capitalize">{{ data.anneesExperience }}</span></p>
+</div>
+
+</div>
+
+<div mat-dialog-actions class="flex justify-end mt-4">
+  <button mat-button mat-dialog-close class="text-gray-600 hover:text-gray-800 font-semibold">Fermer</button>
+</div>

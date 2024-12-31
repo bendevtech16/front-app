@@ -1,0 +1,83 @@
+<div class="container mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
+  <h2 class="text-2xl font-semibold mb-6 text-gray-800">Liste des Candidats</h2>
+
+  <!-- Bouton Ajouter -->
+  <button mat-raised-button color="primary" (click)="ajouterCandidat()" class="mb-6">
+    Ajouter un candidat
+  </button>
+
+  <!-- Indicateur de chargement -->
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <!-- Message si aucune donnée -->
+  <div *ngIf="!isLoading && dataSource.data.length === 0" class="text-center text-gray-500 py-4">
+    Aucun candidat trouvé.
+  </div>
+
+  <!-- Table -->
+  <div class="overflow-x-auto" *ngIf="!isLoading && dataSource.data.length > 0">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full bg-white rounded-lg shadow-lg">
+      <!-- Nom Column -->
+      <ng-container matColumnDef="nom">
+        <th mat-header-cell *matHeaderCellDef class="px-4 py-2 text-left text-gray-700 font-medium">Nom</th>
+        <td mat-cell *matCellDef="let candidat" class="px-4 py-2 text-gray-800"> {{ candidat.nomCandidat }} </td>
+      </ng-container>
+
+      <!-- Prénom Column -->
+      <ng-container matColumnDef="prenom">
+        <th mat-header-cell *matHeaderCellDef class="px-4 py-2 text-left text-gray-700 font-medium">Prénom</th>
+        <td mat-cell *matCellDef="let candidat" class="px-4 py-2 text-gray-800"> {{ candidat.prenomCandidat }} </td>
+      </ng-container>
+
+      <!-- Téléphone Column -->
+      <ng-container matColumnDef="telephone">
+        <th mat-header-cell *matHeaderCellDef class="px-4 py-2 text-left text-gray-700 font-medium">Téléphone</th>
+        <td mat-cell *matCellDef="let candidat" class="px-4 py-2 text-gray-800"> {{ candidat.telephoneCandidat }} </td>
+      </ng-container>
+
+      <!-- Compétences Techniques Column -->
+      <ng-container matColumnDef="competencesTechniques">
+        <th mat-header-cell *matHeaderCellDef class="px-4 py-2 text-left text-gray-700 font-medium">Compétences Techniques</th>
+        <td mat-cell *matCellDef="let candidat" class="px-4 py-2 text-gray-800"> {{ candidat.competencesTechnique.join(', ') }} </td>
+      </ng-container>
+
+      <!-- Diplôme Column -->
+      <ng-container matColumnDef="diplome">
+        <th mat-header-cell *matHeaderCellDef class="px-4 py-2 text-left text-gray-700 font-medium">Diplôme</th>
+        <td mat-cell *matCellDef="let candidat" class="px-4 py-2 text-gray-800"> {{ candidat.diplome }} </td>
+      </ng-container>
+
+      <!-- Date de Naissance Column -->
+      <ng-container matColumnDef="dateNaissance">
+        <th mat-header-cell *matHeaderCellDef class="px-4 py-2 text-left text-gray-700 font-medium">Date de Naissance</th>
+        <td mat-cell *matCellDef="let candidat" class="px-4 py-2 text-gray-800"> {{ candidat.dateNaissance | date }} </td>
+      </ng-container>
+
+      <!-- Compétences Personnelles Column -->
+      <ng-container matColumnDef="competencesPersonnelles">
+        <th mat-header-cell *matHeaderCellDef class="px-4 py-2 text-left text-gray-700 font-medium">Compétences Personnelles</th>
+        <td mat-cell *matCellDef="let candidat" class="px-4 py-2 text-gray-800"> {{ candidat.competencesPersonnelles.join(', ') }} </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="px-4 py-2 text-left text-gray-700 font-medium">Actions</th>
+        <td mat-cell *matCellDef="let candidat" class="px-4 py-2 flex space-x-4">
+          <button mat-icon-button color="primary" (click)="modifierCandidat(candidat)" aria-label="Modifier">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="supprimerCandidat(candidat.candidatId)" aria-label="Supprimer">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Header and Row Declarations -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-indigo-50"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="hover:bg-indigo-100"></tr>
+    </table>
+
+    <!-- Pagination -->
+    <mat-paginator [length]="totalCandidats" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,196 @@
+<mat-toolbar class="blue-drawer" >
+  <button mat-icon-button (click)="myDrawer.toggle()"
+   class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon class="text-black">menu</mat-icon>
+  </button>
+  <span class="flex-auto space-x-3"></span>
+
+  <button routerLink="home" mat-icon-button >
+    <mat-icon class="text-black">home</mat-icon>
+  </button>
+  <button mat-button>Profile</button>
+  <button  mat-button [matMenuTriggerFor]="ImportMenu" *ngIf="authService.roles.includes('ADMIN')">
+    <mat-icon iconPositionEnd >keyboard_arrow_down</mat-icon>
+    Import
+  </button>
+  <mat-menu #ImportMenu>
+    <button  routerLink="candidat" mat-menu-item>Candidats</button>
+    <button mat-menu-item routerLink="candidature">Candidatures</button>
+  </mat-menu>
+  <button  mat-button (click)="myForm.toggle()"
+              *ngIf="authService.roles.includes('ADMIN')"
+           ><i class="text-xl las la-plus-circle"></i>Créer une offre</button>
+  <button mat-button (click)="logout()"> Deconnexion <i class="las la-sign-out-alt text-xl"></i></button>
+</mat-toolbar>
+<mat-drawer-container class="rounded-xl" >
+
+  <mat-drawer #myDrawer opened="false" position="start" mode="side" class="blue-drawer">
+    <mat-list role="list">
+      <mat-list-item role="listitem">
+        <button mat-button routerLink="/admin/dashboard"
+                (click)="setActiveButton('dashboard')"
+                [ngClass]="{'active-button': activeButton === 'dashboard'}">
+          <mat-icon>dashboard</mat-icon> Dashboard
+        </button>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <button mat-button routerLink="/admin/view"
+                (click)="setActiveButton('view')"
+                [ngClass]="{'active-button': activeButton === 'view'}">
+          <mat-icon>tab</mat-icon> Offres
+        </button>
+      </mat-list-item>
+
+      <mat-list-item role="listitem" *ngIf="authService.roles.includes('ADMIN')">
+        <!-- *ngIf="authService.roles.includes('ADMIN')"  -->
+        <button
+                routerLink="/admin/administration"
+                mat-button
+                (click)="setActiveButton('administration')"
+                [ngClass]="{'active-button': activeButton === 'administration'}">
+          <mat-icon>account_circle</mat-icon> Administration
+        </button>
+      </mat-list-item>
+
+      <mat-list-item role="listitem" *ngIf="authService.roles.includes('ADMIN')">
+        <button mat-button routerLink="admin/parametre"
+                (click)="setActiveButton('parametre')"
+                [ngClass]="{'active-button': activeButton === 'parametre'}">
+          <mat-icon>settings</mat-icon> Paramètre
+        </button>
+      </mat-list-item>
+      <mat-divider [inset]="true"></mat-divider>
+      <hr class="pb-64">
+      <p class="text-center text-indigo-950 items-baseline py-4 leading-4 border border-gray-400 rounded bg-indigo-50"
+         *ngIf="authService.isAuthenticated">
+        <mat-icon>account_circle_down</mat-icon> {{authService.username}}
+      </p>
+    </mat-list>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <div class="min-h-screen h-auto w-[100%] max-h-screen justify-center items-center p-0">
+
+      <router-outlet>
+
+      </router-outlet>
+    </div>
+  </mat-drawer-content>
+  <mat-drawer #myForm opened="false" mode="side" position="end" class=" w-[500px] h-[80vh] " >
+
+    <!-- admin.component.html -->
+    <div class="admin-content">
+
+
+      <!-- Overlay (section affichée en overlay) -->
+
+      <div class="overlay-content h-[90vh] w-[500px]">
+        <h2 class=" text-fuchsia-950 font-bold text-3xl text-center">Créer une Nouvelle Offre</h2>
+
+        <!-- Formulaire ou contenu de l'overlay -->
+
+        <form class="example-form"[formGroup]=" offreFormGroup"(ngSubmit)="handleAddOffre()">
+          <!-- Titre de l'emploi -->
+          <mat-form-field class="example-full-width">
+            <mat-label>Titre de l'offre</mat-label>
+            <input matInput placeholder="Devellopeur angular" formControlName="titrePoste" type="text">
+          </mat-form-field>
+
+          <!-- Description de l'emploi -->
+          <mat-form-field class="example-full-width">
+            <label class="block text-gray-700 font-semibold">Description</label>
+    <div class="flex space-x-2 mb-2">
+      <button mat-icon-button (click)="applyFormat('bold')" aria-label="Bold">
+        <mat-icon>format_bold</mat-icon>
+      </button>
+      <button mat-icon-button (click)="applyFormat('underline')" aria-label="Underline">
+        <mat-icon>format_underlined</mat-icon>
+      </button>
+      <button mat-icon-button (click)="applyFormat('list')" aria-label="List">
+        <mat-icon>format_list_bulleted</mat-icon>
+      </button>
+      <button mat-icon-button (click)="applyFormat('center')" aria-label="Center">
+        <mat-icon>format_align_center</mat-icon>
+      </button>
+      <button mat-icon-button (click)="applyFormat('justify')" aria-label="Justify">
+        <mat-icon>format_align_justify</mat-icon>
+      </button>
+    </div>
+    <textarea matInput formControlName="description" rows="5" #descriptionInput class="w-full border p-2"></textarea>
+          </mat-form-field>
+          <!-- Compétences requises -->
+          <mat-form-field class="example-full-width">
+            <mat-label>Competence</mat-label>
+            <input matInput placeholder="Ex: angular- springboot-microservice" formControlName="competences" type="text">
+          </mat-form-field>
+          <!-- Lieu de travail -->
+          <mat-form-field class="example-full-width">
+            <mat-label>Lieu de travail</mat-label>
+            <input matInput placeholder="Ex:1600 yaounde-Cameroun"  formControlName="lieu" type="text">
+
+            <!-- Type de contrat -->
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Type de contrat</mat-label>
+            <mat-select formControlName="typeContrat" >
+              <mat-option value="" disabled>Choisir un</mat-option>
+              <mat-option *ngFor="let type of typeContratEnum | keyvalue" [value]="type.value">{{ type.value }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- Salaire -->
+          <mat-form-field class="example-full-width">
+            <mat-label>Salaire</mat-label>
+            <input matInput type="number" class="example-right-align" formControlName="salaire" placeholder="0" />
+            <span matTextPrefix>$&nbsp;</span>
+            <span matTextSuffix>.00</span>
+          </mat-form-field>
+
+          <!-- Date de début -->
+          <mat-form-field class="example-full-width">
+            <mat-label>Date de début</mat-label>
+            <input matInput  formControlName="dateDebut" type="date">
+          </mat-form-field>
+          <!-- Secteur d'activité -->
+          <mat-form-field class="example-full-width">
+            <mat-label>Secteur d'activité</mat-label>
+            <input matInput formControlName="secteurActivite" type="text" placeholder="Ex:Technologie">
+          </mat-form-field>
+          <!-- Niveau d'expérience -->
+          <mat-form-field class="example-full-width">
+            <mat-label>Niveau d'expérience</mat-label>
+            <mat-select  formControlName="niveau" >
+              <mat-option value="" disabled>Choisir un</mat-option>
+              <mat-option *ngFor="let niveau of niveauExperienceEnum | keyvalue" [value]="niveau.value">{{ niveau.value }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- Niveau d'etude requis -->
+          <mat-form-field class="example-full-width">
+            <mat-label>Niveau d'etude requis</mat-label>
+            <input matInput type="text" formControlName="niveauEtude" min="1">
+          </mat-form-field>
+          <!-- Années d'expérience -->
+          <mat-form-field class="example-full-width">
+            <mat-label>Nombre d'années d'expérience</mat-label>
+            <input matInput type="number" formControlName="anneesExperience" min="1">
+          </mat-form-field>
+          <!-- Champ de téléchargement de l'image -->
+          <div class="mb-3">
+            <label class="block text-gray-700 outline-none">Image illustrative</label>
+            <input type="file" formControlName="illustration" accept=".jpg,.jpeg,.png"
+                  (change)="onFileChange($event)"
+                  class="block w-full text-sm text-slate-500 form-input file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-indigo-700 hover:file:bg-pink-100 px-3 py-2 border border-gray-300 rounded" required>
+          </div>
+
+          <!-- Boutons de soumission et d'annulation -->
+          <div class="flex justify-between">
+            <button type="submit" class="bg-[#7980bc] text-white px-4 py-2 rounded hover:bg-indigo-600">Créer l'offre</button>
+            <button type="button" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" (click)="myForm.toggle()">Annuler</button>
+          </div>
+        </form>
+
+
+      </div>
+    </div>
+  </mat-drawer>
+</mat-drawer-container>

@@ -1,0 +1,78 @@
+<div class="admin-content">
+
+
+  <!-- Overlay (section affichée en overlay) -->
+
+  <div class="overlay-content h-[90vh] w-[500px]">
+    <h2 class=" text-fuchsia-950 font-bold text-3xl text-center">Créer une Nouvelle Offre</h2>
+
+    <!-- Formulaire ou contenu de l'overlay -->
+
+    <form class="example-form"[formGroup]="offreForm" (ngSubmit)="submitForm()" >
+      <mat-form-field class="example-full-width">
+        <mat-label>Titre de l'offre</mat-label>
+        <input matInput placeholder="Devellopeur angular" type="text">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput ></textarea>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Competence</mat-label>
+        <input matInput placeholder="angular- springboot-microservice" type="text">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Lieu de travail</mat-label>
+        <input matInput placeholder="Ex:1600 yaounde-Cameroun" type="text">
+
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Type de contrat</mat-label>
+        <mat-select >
+          <mat-option value="" disabled>Choisir un</mat-option>
+          <mat-option *ngFor="let type of typeContratEnum | keyvalue" [value]="type.value">{{ type.value }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Salaire</mat-label>
+        <input matInput type="number" class="example-right-align" placeholder="0" />
+        <span matTextPrefix>$&nbsp;</span>
+        <span matTextSuffix>.00</span>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Date de début</mat-label>
+        <input matInput type="date">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Secteur d'activité</mat-label>
+        <input matInput type="text" placeholder="Ex:Technologie">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Niveau d'expérience</mat-label>
+        <mat-select >
+          <mat-option value="" disabled>Choisir un</mat-option>
+          <mat-option *ngFor="let niveau of niveauExperienceEnum | keyvalue" [value]="niveau.value">{{ niveau.value }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Nombre d'années d'expérience</mat-label>
+        <input matInput type="number" min="1">
+      </mat-form-field>
+
+      <!-- Boutons de soumission et d'annulation -->
+      <div class="form-buttons">
+        <button mat-button type="submit" class="submit-btn">Creer</button>
+        <button mat-button type="button" (click)="closeOverlay()" class="cancel-btn">
+          Annuler
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

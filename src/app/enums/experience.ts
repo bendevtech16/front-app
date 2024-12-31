@@ -1,0 +1,6 @@
+export enum Experience {
+  DEBUTANT = 'DEBUTANT',
+  INTERMEDIAIRE = 'INTERMEDIAIRE',
+  EXPERIMENTE = 'EXPERIMENTE'
+
+}

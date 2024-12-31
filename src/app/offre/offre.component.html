@@ -1,0 +1,92 @@
+
+<div class="card">
+  <div class="flex justify-between">
+    <h1 class="text-center font-bold text-fuchsia-950">Les Offres d'emploi disponible</h1>
+
+    <!-- Formulaire de recherche -->
+<form class="flex mx-1 items-center" [formGroup]="searchFormGroup" (ngSubmit)="handleSearchOffre()">
+  <div class="relative w-full max-w-md">
+    <!-- Champ de recherche -->
+    <input
+      type="search"
+      formControlName="search"
+      class="w-full h-10 px-4 pr-10 text-sm border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      placeholder="Ex: backend"
+    />
+
+    <!-- Bouton de recherche intégré -->
+    <button
+      type="submit"
+      class="absolute inset-y-0 right-0 flex items-center px-3 bg-indigo-800 text-white rounded-r-full hover:bg-indigo-900 focus:outline-none"
+      aria-label="Rechercher une offre"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+</form>
+
+  </div>
+
+  <hr class="text-gray-400">
+
+  <div class="flex flex-wrap m-5">
+    <!-- Boucle pour afficher chaque carte d'offre -->
+    <div *ngFor="let offre of offres"
+         class="bg-white border-2 hover:bg-indigo-100 w-full md:w-[500px] rounded-lg shadow-md p-5 m-3 hover:shadow-lg transition-shadow duration-300">
+
+      <!-- Contenu de la carte avec image à gauche et informations à droite, centré verticalement -->
+      <div class="flex items-center">
+        <!-- Image de l'offre -->
+        <div class="w-1/3 max-w-[120px] overflow-hidden rounded-lg mr-4">
+          <img *ngIf="offre.illustration" class="w-full h-full object-cover" [src]="offre.illustration" alt="Image de l'offre" />
+        </div>
+
+        <!-- Détails de l'offre -->
+        <div class="w-2/3">
+          <h3 class="tracking-wide text-left text-base text-indigo-500 font-semibold lowercase">{{ offre.titrePoste }}</h3>
+          <p class="text-sm text-gray-600"><i class="las la-map-marker-alt"></i> <strong>Lieu :</strong> <span class="text-[#0a1e29] capitalize">{{ offre.lieu }}</span></p>
+          <p class="text-gray-700 text-sm"><i class="las la-file-alt"></i> <strong>Description :</strong> <span class="text-[#0a1e29] capitalize">{{ offre.description }}</span></p>
+          <p class="text-sm text-gray-600"><i class="las la-file-contract"></i> <strong>Type de Contrat :</strong> <span class="text-[#0a1e29] capitalize">{{ offre.typeContrat }}</span></p>
+          <p class="text-sm text-gray-600"><i class="las la-graduation-cap"></i> <strong>Niveau d'étude :</strong> <span class="text-[#0a1e29] capitalize">{{ offre.niveauEtude }}</span></p>
+          <p class="text-[12px] text-sm text-gray-600"><i class="las la-dollar-sign text-[18px]"></i> <strong>Salaire :</strong> <span class="text-[#0a1e29] capitalize">{{ offre.salaire | currency:'USD':'symbol':'1.0-0' }}</span></p>
+        </div>
+      </div>
+
+      <!-- Ligne de séparation -->
+      <hr class="my-2">
+
+      <!-- Boutons en bas de la carte -->
+      <div class="flex justify-between mt-3">
+        <button   [disabled]="offre.postule" class="w-auto bg-blue-950 text-white px-3 py-1 rounded-lg hover:bg-indigo-700 transition-colors duration-200">
+          {{ offre.postule ? 'Déjà postulé' : 'Postuler' }}
+        </button>
+        <button (click)="openDetailDialog(offre)" class="w-auto bg-gray-500 text-white px-3 py-1 rounded-lg hover:bg-gray-700 transition-colors duration-200">
+          Voir plus
+        </button>
+        <button (click)="deleteOffre(offre)" class="w-auto bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition-colors duration-200">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button (click)="openEditDialog(offre)" class="w-auto bg-green-500 text-white px-3 py-1 rounded-lg hover:bg-green-700 transition-colors duration-200">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Message si aucune offre n'est disponible -->
+    <ng-container *ngIf="offres.length === 0">
+      <span class="text-red-300 text-center w-full">Aucune offre n'est disponible.</span>
+    </ng-container>
+  </div>
+
+
+
+  <!-- Paginator de pagination -->
+  <mat-paginator
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="currentPage"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="handlePageEvent($event)"
+    aria-label="Select page">
+  </mat-paginator>
+</div>
